@@ -1,7 +1,6 @@
 from collections import deque
 import copy
 
-answer=100
 visited=[]
 new_wires=[]
 
@@ -22,7 +21,8 @@ def bfs(num, bfswires):
     return cnt
 
 def solution(n, wires):
-    global N, visited, new_wires, answer
+    global N, visited, new_wires
+    answer=100
     max_v = max(map(max,wires))
     new_wires=[[] for _ in range(max_v+1)]
     
