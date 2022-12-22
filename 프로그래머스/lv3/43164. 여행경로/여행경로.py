@@ -1,7 +1,6 @@
 from collections import deque
 
 
-
 def bfs(start_idx,tickets):
     answer=["ICN"]
     arr=[]
@@ -20,7 +19,7 @@ def bfs(start_idx,tickets):
         end=q.popleft()
         cur_arr,visited=q2.popleft()
         if len(cur_arr)==len(tickets)+1:
-            arr.append(cur_arr)
+            return cur_arr
         for idx, ticket in enumerate(tickets):
 
             if ticket[0]==end and visited[idx]==0:
@@ -30,8 +29,7 @@ def bfs(start_idx,tickets):
                 q2.append([cur_arr+[ticket[1]],visited[:]])
                 visited[idx]=0
             
-    return sorted(arr)[0]
-
+  
 
 def solution(tickets):
     tickets.sort(key=lambda x:(x[0],x[1]))
