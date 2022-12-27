@@ -29,7 +29,26 @@ def bfs(start_idx,tickets):
                 q2.append([cur_arr+[ticket[1]],visited[:]])
                 visited[idx]=0
             
-  
+            
+def dfs():
+    t_dict = defaultdict(list)
+    for start, end in tickets:
+        t_dict[start].append(end)
+    for k in t_dict:
+        t_dict[k].sort()
+
+    print(t_dict)
+    s=["ICN"]
+    p=[]
+
+    while s:
+        n=s[-1]
+        if t_dict[n]!=[]:
+            s.append(t_dict[n].pop(0))
+        else:
+            p.append(s.pop())
+    
+    return p[::-1]
 
 def solution(tickets):
     tickets.sort(key=lambda x:(x[0],x[1]))
