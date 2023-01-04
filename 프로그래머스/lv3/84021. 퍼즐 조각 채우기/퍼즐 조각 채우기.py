@@ -1,19 +1,19 @@
 import copy
 
-def dfs(graph, x, y, position, n, num):
-    dic = {0:[-1, 0], 1:[0, 1], 2:[1, 0], 3:[0, -1]}
-    
+dy=[0,1,0,-1]
+dx=[1,0,-1,0]
+
+def dfs(graph, y, x, position, n, num):
     ret = [position]
-    
     for i in range(4):
-        nx = x + dic[i][0]
-        ny = y + dic[i][1]
-        
-        if 0 <= nx < n and 0 <= ny < n and graph[nx][ny] == num:
-            graph[nx][ny] = 2
-            ret = ret + dfs(graph, nx, ny, [position[0]+dic[i][0], position[1]+dic[i][1]], n, num)
+        ny=y+dy[i]
+        nx=x+dx[i]
+        if 0<=ny<n and 0<=nx<n and graph[ny][nx]==num:
+            graph[ny][nx]=2
+            ret+=dfs(graph, ny, nx, [position[0]+dy[i], position[1]+dx[i]], n, num)
     
     return ret
+
         
 def rotate(lst):
     n = len(lst)
