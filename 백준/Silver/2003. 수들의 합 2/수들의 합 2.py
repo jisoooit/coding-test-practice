@@ -1,14 +1,22 @@
 n,m=map(int,input().split())
 arr=list(map(int,input().split()))
 
-ans=0
 
-for i in range(n):
-    s=0
-    for j in range(i, n):
-        s+=arr[j]
-        if s==m:
-            ans+=1
-            break
+s=0
+count=0
+start=0
+end=0
 
-print(ans)
+while True:
+    if s>m:
+        s-=arr[start]
+        start+=1
+    elif end==n:
+        break
+    else:
+        s+=arr[end]
+        end+=1
+    if s==m:
+        count+=1
+
+print(count)
