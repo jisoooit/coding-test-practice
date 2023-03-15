@@ -1,56 +1,56 @@
 from collections import deque
 import copy
 
-def bfs():
-    queue = deque()
-    tmp_graph = copy.deepcopy(graph)
-    for i in range(n):
-        for j in range(m):
-            if tmp_graph[i][j] == 2:
-                queue.append((i, j))
+n,m=map(int,input().split())
+board=[list(map(int,input().split())) for _ in range(n)]
+virus_visit=[[0 for _ in range(m)] for _ in range(n)]
+visit=[[0 for _ in range(m)] for _ in range(n)]
+dy=[0,1,0,-1]
+dx=[1,0,-1,0]
+ans=0
 
-    while queue:
-        x, y = queue.popleft()
+def dfs(depth):
+    global ans
 
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-
-            if nx < 0 or nx >= n or ny < 0 or ny >= m:
-                continue
-            if tmp_graph[nx][ny] == 0:
-                tmp_graph[nx][ny] = 2
-                queue.append((nx, ny))
-
-    global answer
-    cnt = 0
-
-    for i in range(n):
-        cnt += tmp_graph[i].count(0)
-
-    answer = max(answer, cnt)
-
-
-def makeWall(cnt):
-    if cnt == 3:
-        bfs()
+    if (depth == 3):
+        virus()
         return
-
     for i in range(n):
         for j in range(m):
-            if graph[i][j] == 0:
-                graph[i][j] = 1
-                makeWall(cnt+1)
-                graph[i][j] = 0
+            if board[i][j]==0 and visit[i][j]==0:
+                visit[i][j]=1
+                board[i][j]=1
+                dfs(depth+1)
+                visit[i][j]=0
+                board[i][j]=0
+                
 
-n, m = map(int, input().split())
-graph = []
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
+def virus():
+    q=deque()
+    board_copy=copy.deepcopy(board)
+    for i in range(n):
+        for j in range(m):
+            if board_copy[i][j]==2:
+                q.append([i,j])
 
-for i in range(n):
-    graph.append(list(map(int, input().split())))
+    while q:
+        y,x=q.popleft()
+        for i in range(4):
+            ny=y+dy[i]
+            nx=x+dx[i]
+            if 0<=ny<n and 0<=nx<m and board_copy[ny][nx]==0 :
+                q.append([ny,nx])
+                board_copy[ny][nx]=2
+    
+      
+    global ans
+    cnt=0
 
-answer = 0
-makeWall(0)
-print(answer)
+    for i in range(n):
+        cnt+=board_copy[i].count(0)
+    ans=max(ans,cnt)
+
+
+
+dfs(0)
+print(ans)
